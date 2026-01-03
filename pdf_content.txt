@@ -1,0 +1,145 @@
+AI-Native Consumer Health Co-
+Pilot
+Problem Statement
+Background
+Modern food labels are written for regulatory compliance, not for human 
+understanding.
+Consumers are expected to interpret:
+Long ingredient lists
+Unfamiliar chemical names
+Conflicting health advice
+Unclear risk levels
+At the exact moment of purchase, people are forced to do complex reasoning 
+under pressure.
+Existing apps fail because they:
+Dump raw data
+Require heavy manual input
+Treat AI as an add-on instead of the interface
+Increase cognitive load instead of reducing it
+Core Problem
+How can we design an AI-native experience that helps a consumer understand 
+what truly matters about a food product at the moment of decision, with minimal 
+cognitive effort?
+AINativ e Consumer He al th Co-Pilot
+1
+Solution Vision
+Product Idea
+Build an AINative Consumer Health Co-Pilot that:
+Acts as an intelligent guide at decision time
+Infers what matters without forcing configuration
+Explains trade-offs and uncertainty clearly
+Helps the user reach a confident decision
+Key Principle
+The AI is the interface, not a feature.
+The system focuses on situational reasoning, not data presentation.
+AI Reasoning Framework (Core Intelligence)
+For every product, the AI follows this internal flow:
+ Infer the decision context
+ Identify top 23 health-relevant signals
+ Explain why those signals matter
+ Expose trade-offs & uncertainty
+ Provide a clear recommendation
+ Ask one minimal clarifying question only if risk exists
+This framework defines how your AI “thinksˮ.
+AINativ e Consumer He al th Co-Pilot
+2
+User Experience Flow
+User opens app
+User uploads product image / ingredients
+AI extracts ingredients
+AI produces:
+Verdict: Good / Caution / Avoid
+23 key reasons
+Trade-offs & uncertainty
+Clear guidance
+If needed, AI asks one short question
+AI refines advice
+User leaves with clarity
+Technical Architecture
+Frontend — Experience Layer
+Purpose:
+Deliver a calm, low-cognitive-load decision experience to the user.
+Technology Stack:
+React  Vite
+Mobile-first responsive UI
+Core UI Components:
+Product Input
+Live camera capture
+Image upload
+AINativ e Consumer He al th Co-Pilot
+3
+Manual ingredient entry (fallback)
+Verdict Card
+Status: Good / Caution / Avoid
+23 key health reasons
+Chat-Style Conversation Panel
+Follow-up question input
+Session-based conversation memory
+Responsibilities:
+Collect user input
+Render structured AI intelligence
+Maintain conversation flow
+Explicit Non-Responsibilities:
+No health reasoning
+No data interpretation
+No AI logic
+Backend — Intelligence Control Layer
+Purpose:
+Enforce how intelligence behaves and guarantee consistent reasoning.
+Technology Stack:
+Node.js  Express
+Primary Endpoints:
+P O S T  / a n a l y z e  → initial product analysis
+P O S T  / f o l l o w u p  → continued reasoning within session
+Core Processing Pipeline:
+AINativ e Consumer He al th Co-Pilot
+4
+Backend Responsibilities:
+Enforce System Prompt
+Enforce Reasoning Framework
+Enforce Output Schema
+Reject & retry invalid AI outputs
+Maintain conversation session context
+AI Layer — The Reasoning Engine
+Purpose:
+Provide controlled, explainable intelligence.
+Technology:
+LLM API GPT4o / Claude / Gemini)
+Vision / OCR API for ingredient extraction
+Intelligence Contract Hard Rules):
+System Prompt  AI identity & mission
+Reasoning Framework → mandatory thinking sequence
+AINativ e Consumer He al th Co-Pilot
+5
+Output Schema → strict JSON communication contract
+The AI never speaks outside this contract.
+Data Layer — Intentional & Minimal
+Purpose:
+Support realistic reasoning, not data completeness.
+Components:
+Small curated ingredient dataset JSON
+510 real product examples
+Optional OpenFoodFacts fetch for demo realism
+Design Principle:
+Experience & reasoning quality > data volume
+System Flow
+AINativ e Consumer He al th Co-Pilot
+6
+Evaluation Alignment
+The product is optimized for:
+AINative Experience 50%
+Reasoning & Explainability 30%
+Technical Execution 20%
+Non-Goals
+No dashboards
+No complex profiles
+No giant databases
+No OCR competitions
+No feature bloat
+Deliverables
+GitHub repository
+Working web prototype
+2-minute demo video
+Well-documented system design
+AINativ e Consumer He al th Co-Pilot
+7
