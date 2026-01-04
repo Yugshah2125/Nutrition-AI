@@ -3,21 +3,22 @@
   --bg-dark: #0f1014;
   --bg-card: #16181d;
   --bg-input: #23252b;
-  
+
   --text-primary: #f0f2f5;
   --text-secondary: #9ca3af;
   --text-muted: #6b7280;
 
-  --accent-primary: #3b82f6; /* Electric Blue */
+  --accent-primary: #3b82f6;
+  /* Electric Blue */
   --accent-glow: rgba(59, 130, 246, 0.5);
-  
+
   /* Status Colors */
   --status-good: #10b981;
   --status-good-bg: rgba(16, 185, 129, 0.1);
-  
+
   --status-caution: #f59e0b;
   --status-caution-bg: rgba(245, 158, 11, 0.1);
-  
+
   --status-avoid: #ef4444;
   --status-avoid-bg: rgba(239, 68, 68, 0.1);
 
@@ -26,7 +27,7 @@
   --radius-md: 12px;
   --radius-lg: 20px;
   --radius-full: 9999px;
-  
+
   /* Glassmorphism */
   --glass-bg: rgba(22, 24, 29, 0.7);
   --glass-border: rgba(255, 255, 255, 0.08);
@@ -97,17 +98,71 @@ body {
 }
 
 /* Typography */
-h1 { font-size: 2rem; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 1rem; background: linear-gradient(to right, #fff, #9ca3af); -webkit-background-clip: text; -webkit-text-fill-color: transparent;}
-h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 0.5rem; }
-h3 { font-size: 1.1rem; font-weight: 600; margin-bottom: 0.25rem; }
-p { margin-bottom: 1rem; color: var(--text-secondary); }
+h1 {
+  font-size: 2rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0 0 1rem;
+  background: linear-gradient(to right, #fff, #9ca3af);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin: 0 0 0.5rem;
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+}
+
+p {
+  margin-bottom: 1rem;
+  color: var(--text-secondary);
+}
 
 /* Animation */
 @keyframes fadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .animate-fade-in {
   animation: fadeIn 0.4s ease-out forwards;
+}
+
+.btn-secondary {
+  background: var(--bg-input);
+  color: var(--text-secondary);
+  border: 1px solid var(--glass-border);
+  padding: 8px 16px;
+  border-radius: var(--radius-full);
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn-secondary:hover {
+  background: var(--glass-border);
+  color: var(--text-primary);
+}
+
+.btn-secondary.active {
+  background: var(--accent-primary);
+  color: white;
+  border-color: var(--accent-primary);
 }

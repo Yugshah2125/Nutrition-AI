@@ -1,8 +1,10 @@
 import { useState, useRef } from 'react';
-import { Camera, Upload, Loader2 } from 'lucide-react';
+import { Camera, Upload, Loader2, Image as ImageIcon } from 'lucide-react';
+import CameraCapture from './CameraCapture';
 
 export default function ProductInput({ onAnalyze, isAnalyzing }) {
     const [dragActive, setDragActive] = useState(false);
+    const [inputMode, setInputMode] = useState('upload'); // 'upload' | 'camera'
     const inputRef = useRef(null);
 
     const handleDrag = (e) => {
@@ -64,32 +66,71 @@ export default function ProductInput({ onAnalyze, isAnalyzing }) {
                     <p style={{ fontSize: '0.9rem' }}>Reading ingredients & checking health facts</p>
                 </div>
             ) : (
-                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px' }}>
-                    <div
-                        style={{
-                            width: '80px',
-                            height: '80px',
-                            borderRadius: '50%',
-                            background: 'var(--bg-input)',
-                            display: 'flex',
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            marginBottom: '10px'
-                        }}
-                    >
-                        <Camera size={40} color="var(--text-secondary)" />
+                <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '20px', width: '100%' }}>
+
+                    {/* Input Mode Toggle */}
+                    <div className="input-mode-toggle" style={{ display: 'flex', gap: '10px', marginBottom: '10px' }}>
+                        <button
+                            className={`btn-secondary ${inputMode === 'upload' ? 'active' : ''}`}
+                            onClick={() => setInputMode('upload')}
+                            style={{
+                                background: inputMode === 'upload' ? 'var(--accent-primary)' : 'transparent',
+                                color: inputMode === 'upload' ? '#fff' : 'var(--text-secondary)',
+                                borderColor: inputMode === 'upload' ? 'var(--accent-primary)' : 'var(--text-muted)'
+                            }}
+                        >
+                            <Upload size={16} style={{ marginRight: '6px' }} />
+                            Upload
+                        </button>
+                        <button
+                            className={`btn-secondary ${inputMode === 'camera' ? 'active' : ''}`}
+                            onClick={() => setInputMode('camera')}
+                            style={{
+                                background: inputMode === 'camera' ? 'var(--accent-primary)' : 'transparent',
+                                color: inputMode === 'camera' ? '#fff' : 'var(--text-secondary)',
+                                borderColor: inputMode === 'camera' ? 'var(--accent-primary)' : 'var(--text-muted)'
+                            }}
+                        >
+                            <Camera size={16} style={{ marginRight: '6px' }} />
+                            Camera
+                        </button>
                     </div>
 
-                    <div>
-                        <h3 style={{ marginBottom: '8px' }}>Scan Nutrition Label</h3>
-                        <p style={{ fontSize: '0.9rem' }}>Upload or take a photo of the ingredients list</p>
-                    </div>
+                    {inputMode === 'camera' ? (
+                        <CameraCapture
+                            onCapture={onAnalyze}
+                            onCancel={() => setInputMode('upload')}
+                        />
+                    ) : (
+                        /* Upload UI */
+                        <>
+                            <div
+                                style={{
+                                    width: '80px',
+                                    height: '80px',
+                                    borderRadius: '50%',
+                                    background: 'var(--bg-input)',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    marginBottom: '10px'
+                                }}
+                            >
+                                <ImageIcon size={40} color="var(--text-secondary)" />
+                            </div>
 
-                    <button className="btn-primary" onClick={onButtonClick}>
-                        Select Image
-                    </button>
+                            <div>
+                                <h3 style={{ marginBottom: '8px' }}>Scan Nutrition Label</h3>
+                                <p style={{ fontSize: '0.9rem' }}>Upload a photo of the ingredients list</p>
+                            </div>
 
-                    <p style={{ fontSize: '0.8rem', opacity: 0.6 }}>or drag and drop file here</p>
+                            <button className="btn-primary" onClick={onButtonClick}>
+                                Select Image
+                            </button>
+
+                            <p style={{ fontSize: '0.8rem', opacity: 0.6 }}>or drag and drop file here</p>
+                        </>
+                    )}
                 </div>
             )}
 
