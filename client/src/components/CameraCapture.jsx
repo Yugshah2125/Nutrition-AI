@@ -112,6 +112,12 @@ export default function CameraCapture({ onCapture, onCancel }) {
         }
     };
 
+    const handleRetake = () => {
+        setCapturedImage(null);
+        setBlob(null);
+        setError(null);
+    };
+
     const handleConfirm = () => {
         if (blob) {
             // Create a File object from Blob with unique name
