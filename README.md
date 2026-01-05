@@ -40,3 +40,14 @@ An AI-powered Consumer Health Co-Pilot that helps you understand food products i
 
 - `server/`: Backend logic, AI service, and Prompts.
 - `client/`: Frontend application, components, and styling.
+
+## 🔐 Environment Setup
+
+This project uses environment variables for API keys and configuration.
+
+After cloning the repository, create your own `.env` file in the project root.
+
+1. Copy the example file:
+
+```bash
+cp .env.example .env
