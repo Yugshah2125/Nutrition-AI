@@ -1,53 +1,59 @@
 # Nutrition AI Native System
 
-An AI-powered Consumer Health Co-Pilot that helps you understand food products instantly.
+An intelligent, AI-Native Consumer Health Co-Pilot that helps you understand food products instantly with calm, expert guidance.
 
-## Architecture
+## 🚀 Core Features
 
-- **Frontend**: React + Vite (Premium Dark Mode Design)
-- **Backend**: Node.js + Express
-- **AI**: Google Gemini 1.5 Flash (Vision + Reasoning)
+-   **Instant Analysis**: Upload labels to get a "Good", "Caution", or "Avoid" verdict immediately.
+-   **Persistent Product Memory**: The AI remembers the product ingredients and nutrition throughout your entire chat session.
+-   **Calm Expert Persona**: Receive objective, decision-oriented advice without alarmism or fluff.
+-   **Strict Reliability**: Advanced JSON contracts and auto-retry logic ensure the AI always responds correctly.
+-   **Interactive Chat**: Ask follow-up questions (e.g., "Why is this bad?") and get context-aware answers.
 
-## Features
+## 🏗 Architecture
 
-- **Scan**: Upload or drag-and-drop food labels.
-- **Analyze**: AI infers context, identifies health signals, and provides a clear verdict (Good/Caution/Avoid).
-- **Explain**: Key reasons and trade-offs are displayed clearly.
-- **Chat**: Ask follow-up questions to the "Nutrition Assistant".
+-   **Frontend**: React + Vite (Premium Dark Mode Design, Glassmorphism)
+-   **Backend**: Node.js + Express
+-   **AI Engine**: Google Gemini 2.5 Flash (Vision + Reasoning)
+-   **Memory**: In-Memory Product Context (Session-based)
 
-## Setup
+## 🛠️ Setup & Run
 
-1.  **Install Dependencies**
-    ```bash
-    cd server
-    npm install
-    
-    cd ../client
-    npm install
-    ```
-
-2.  **Environment Variables**
-    Ensure a `.env` file exists in the root directory with:
-    ```
-    GEMINI_API_KEY=your_key_here
-    ```
-
-3.  **Run Development**
-    - **Server**: `cd server && npm start` (Runs on port 5000)
-    - **Client**: `cd client && npm run dev` (Runs on port 5173)
-
-## Project Structure
-
-- `server/`: Backend logic, AI service, and Prompts.
-- `client/`: Frontend application, components, and styling.
-
-## 🔐 Environment Setup
-
-This project uses environment variables for API keys and configuration.
-
-After cloning the repository, create your own `.env` file in the project root.
-
-1. Copy the example file:
-
+### 1. Install Dependencies
 ```bash
-cp .env.example .env
+# Backend
+cd server
+npm install
+
+# Frontend
+cd ../client
+npm install
+```
+
+### 2. Configure Environment
+Create a `.env` file in the project root:
+```env
+GEMINI_API_KEY=your_api_key_here
+PORT=5000
+```
+
+### 3. Start Development Servers
+You can see the system running by starting both terminals:
+
+**Backend (Port 5000)**
+```bash
+cd server
+npm start
+```
+
+**Frontend (Port 5173)**
+```bash
+cd client
+npm run dev
+```
+
+## 📂 Project Structure
+
+-   `server/`: Backend API, AI Service, Prompts (`server/prompts.js`), and Context Logic.
+-   `client/`: Modern React frontend with Tailwind-like custom CSS.
+-   `server/tests/`: Automated verification scripts for AI reliability.
