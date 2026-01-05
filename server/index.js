@@ -5,7 +5,7 @@ const path = require('path');
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
 // Load environment variables from the root .env file
-require('dotenv').config({ path: path.join(__dirname, '../.env') });
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 5000;
