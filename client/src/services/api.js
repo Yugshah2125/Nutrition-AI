@@ -1,4 +1,10 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Robustly handle API URL - ensure it ends with /api (and strip trailing slash from base if needed)
+let rawUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000/api';
+// Remove trailing slash
+rawUrl = rawUrl.replace(/\/$/, "");
+// Append /api if not present
+const API_URL = rawUrl.endsWith('/api') ? rawUrl : `${rawUrl}/api`;
+
 console.log("Using API URL:", API_URL);
 
 /**
