@@ -72,47 +72,52 @@ export default function CameraCapture({ onCapture, onCancel }) {
     };
 
     const handleCapture = () => {
-        if (!videoRef.current || !canvasRef.current) return;
+        try {
+            if (!videoRef.current || !canvasRef.current) return;
 
-        const video = videoRef.current;
-        const canvas = canvasRef.current;
-        const context = canvas.getContext('2d');
+            const video = videoRef.current;
+            const canvas = canvasRef.current;
 
-        // Set canvas dimensions to match video
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+            // Defensive Check for dimensions
+            if (video.videoWidth === 0 || video.videoHeight === 0) {
+                console.warn("Video stream not ready for capture");
+                return;
+            }
 
-        // Draw video frame to canvas
-        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+            const context = canvas.getContext('2d');
 
-        // Convert to data URL for preview
-        const dataUrl = canvas.toDataURL('image/jpeg');
-        setCapturedImage(dataUrl);
+            // Set canvas dimensions to match video
+            canvas.width = video.videoWidth;
+            canvas.height = video.videoHeight;
 
-        // Convert to Blob for upload
-        canvas.toBlob((blob) => {
-            setBlob(blob);
-        }, 'image/jpeg', 0.95);
+            // Draw video frame to canvas
+            context.drawImage(video, 0, 0, canvas.width, canvas.height);
 
-        // Stop camera stream to save resources while reviewing
-        // stopCamera(); // OPTIONAL: keep stream running if we want instant retake without re-requesting?
-        // Let's keep stream running in background or pause it? 
-        // Better to pause video element or just overlay the image.
-        // For simplicity, we'll keep the stream running but hidden, or just overlay the captured image.
-    };
+            // Convert to data URL for preview
+            const dataUrl = canvas.toDataURL('image/jpeg');
+            setCapturedImage(dataUrl);
 
-    const handleRetake = () => {
-        setCapturedImage(null);
-        setBlob(null);
-        // If we stopped the camera, restart it here.
-        // Since we didn't strictly stop it in this implementation logic (just overlay), we are good.
-        // If we decided to stop it to save battery, we would call startCamera() here.
+            // Convert to Blob for upload
+            canvas.toBlob((b) => {
+                if (!b) {
+                    setError("Failed to process image.");
+                    return;
+                }
+                setBlob(b);
+            }, 'image/jpeg', 0.95);
+
+        } catch (e) {
+            console.error("Capture failed:", e);
+            setError("Could not capture image. Try creating a file instead.");
+        }
     };
 
     const handleConfirm = () => {
         if (blob) {
-            // Create a File object from Blob
-            const file = new File([blob], "camera-capture.jpg", { type: "image/jpeg" });
+            // Create a File object from Blob with unique name
+            const timestamp = new Date().getTime();
+            const filename = `camera_capture_${timestamp}.jpg`;
+            const file = new File([blob], filename, { type: "image/jpeg" });
             onCapture(file);
         }
     };

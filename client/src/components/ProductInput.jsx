@@ -28,12 +28,27 @@ export default function ProductInput({ onAnalyze, isAnalyzing }) {
 
     const handleChange = (e) => {
         if (e.target.files && e.target.files[0]) {
-            onAnalyze(e.target.files[0]);
+            const file = e.target.files[0];
+
+            // Defensive validation
+            if (file.size === 0) {
+                alert("The selected file is empty. Please try another image.");
+                return;
+            }
+
+            // Reset input so the same file can be selected again if needed
+            // e.target.value = ''; // Note: This triggers change event issues in some React versions if not careful, but usually strict necessity.
+
+            onAnalyze(file);
         }
+        // Normalize mobile behavior: reset the input value to allow re-selection of the same file
+        e.target.value = null;
     };
 
     const onButtonClick = () => {
-        inputRef.current.click();
+        if (inputRef.current) {
+            inputRef.current.click();
+        }
     };
 
     return (
@@ -57,6 +72,8 @@ export default function ProductInput({ onAnalyze, isAnalyzing }) {
                 accept="image/*"
                 onChange={handleChange}
                 style={{ display: 'none' }}
+            // Important for mobile cameras: capture attribute
+            // capture="environment" // Optional: forcing rear camera on some devices, but standard file picker is safer for dual-use.
             />
 
             {isAnalyzing ? (

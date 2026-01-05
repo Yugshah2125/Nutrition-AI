@@ -15,13 +15,23 @@ function App() {
     setView('analyzing');
     setError(null);
     try {
+      if (!file) throw new Error("No file received");
+
       const data = await analyzeImage(file);
       setResult(data);
       setSessionId(data.sessionId);
       setView('results');
     } catch (err) {
-      console.error(err);
-      setError("Failed to analyze product. Please try again.");
+      console.error("Analysis failed:", err);
+      // Robust error message extraction
+      let errorMessage = "Failed to analyze product. Please try again.";
+      if (err instanceof Error) {
+        errorMessage = err.message;
+      } else if (typeof err === "string") {
+        errorMessage = err;
+      }
+
+      setError(errorMessage);
       setView('home');
     }
   };
