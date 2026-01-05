@@ -57,3 +57,15 @@ npm run dev
 -   `server/`: Backend API, AI Service, Prompts (`server/prompts.js`), and Context Logic.
 -   `client/`: Modern React frontend with Tailwind-like custom CSS.
 -   `server/tests/`: Automated verification scripts for AI reliability.
+
+### 🐍 Python Utilities
+The project includes optional Python scripts (e.g., for PDF processing). To use them:
+
+1.  Install dependencies:
+    ```bash
+    pip install -r requirements.txt
+    ```
+2.  Run the script:
+    ```bash
+    python read_pdf.py
+    ```
