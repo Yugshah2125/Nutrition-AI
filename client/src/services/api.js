@@ -10,17 +10,23 @@ export async function analyzeImage(imageFile) {
     const formData = new FormData();
     formData.append('image', imageFile);
 
-    const response = await fetch(`${API_URL}/analyze`, {
-        method: 'POST',
-        body: formData,
-    });
+    try {
+        const response = await fetch(`${API_URL}/analyze`, {
+            method: 'POST',
+            body: formData,
+        });
 
-    if (!response.ok) {
-        const errorData = await response.json().catch(() => ({}));
-        throw new Error(errorData.error || 'Failed to analyze product');
+        if (!response.ok) {
+            const errorData = await response.json().catch(() => ({}));
+            throw new Error(errorData.error || `Server error: ${response.status}`);
+        }
+
+        return response.json();
+    } catch (error) {
+        console.error("API Call Failed:", error);
+        // Throw a visible error with the URL to help debugging
+        throw new Error(`Connection Failed: ${error.message}. Trying to reach: ${API_URL}`);
     }
-
-    return response.json();
 }
 
 /**
