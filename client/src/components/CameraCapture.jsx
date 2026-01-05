@@ -12,21 +12,48 @@ export default function CameraCapture({ onCapture, onCancel }) {
     // Initialize Camera
     useEffect(() => {
         startCamera();
+
+        const handleResize = () => {
+            // Optional: trigger re-layout logic if needed, 
+            // but CSS object-fit usually handles this. 
+            // We keep this listener to ensure stream stays active/correct.
+        };
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('orientationchange', handleResize);
+
         return () => {
             stopCamera();
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('orientationchange', handleResize);
         };
     }, []);
 
     const startCamera = async () => {
         try {
             setError(null);
-            const mediaStream = await navigator.mediaDevices.getUserMedia({
-                video: { facingMode: 'environment' }, // Prefer back camera on mobile, though this is desktop first
-                audio: false
-            });
-            setStream(mediaStream);
-            if (videoRef.current) {
-                videoRef.current.srcObject = mediaStream;
+
+            // Attempt 1: Try to get the environment (rear) camera
+            try {
+                const mediaStream = await navigator.mediaDevices.getUserMedia({
+                    video: { facingMode: { ideal: "environment" } },
+                    audio: false
+                });
+                setStream(mediaStream);
+                if (videoRef.current) {
+                    videoRef.current.srcObject = mediaStream;
+                }
+            } catch (err) {
+                console.warn("Retrying with default camera due to error:", err);
+                // Attempt 2: Fallback to any available video source
+                const fallbackStream = await navigator.mediaDevices.getUserMedia({
+                    video: true,
+                    audio: false
+                });
+                setStream(fallbackStream);
+                if (videoRef.current) {
+                    videoRef.current.srcObject = fallbackStream;
+                }
             }
         } catch (err) {
             console.error("Camera access error:", err);
@@ -38,6 +65,9 @@ export default function CameraCapture({ onCapture, onCancel }) {
         if (stream) {
             stream.getTracks().forEach(track => track.stop());
             setStream(null);
+        }
+        if (videoRef.current) {
+            videoRef.current.srcObject = null;
         }
     };
 

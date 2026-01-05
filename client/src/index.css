@@ -48,6 +48,8 @@ body {
   max-width: 600px;
   margin: 0 auto;
   min-height: 100vh;
+  /* Fallback */
+  min-height: calc(var(--vh, 1vh) * 100);
   padding: 20px;
   display: flex;
   flex-direction: column;
@@ -61,6 +63,48 @@ body {
   border: 1px solid var(--glass-border);
   border-radius: var(--radius-lg);
   box-shadow: var(--glass-shadow);
+  max-width: 100%;
+  box-sizing: border-box;
+  /* Ensure padding doesn't overflow */
+}
+
+/* Mobile Optimizations */
+@media (max-width: 768px) {
+  #root {
+    padding: 16px;
+  }
+
+  .glass-panel {
+    padding: 24px 16px !important;
+    /* Override inline styles if needed */
+  }
+
+  /* Touch Targets */
+  button,
+  .btn-primary,
+  .btn-secondary,
+  .btn-icon {
+    min-height: 44px;
+    min-width: 44px;
+    touch-action: manipulation;
+  }
+}
+
+/* Hover fixes for touch devices */
+@media (hover: hover) {
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    filter: brightness(1.1);
+  }
+
+  .btn-icon:hover {
+    background: var(--accent-primary);
+  }
+
+  .btn-secondary:hover {
+    background: var(--glass-border);
+    color: var(--text-primary);
+  }
 }
 
 .btn-primary {
@@ -104,6 +148,7 @@ h1 {
   letter-spacing: -0.02em;
   margin: 0 0 1rem;
   background: linear-gradient(to right, #fff, #9ca3af);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
@@ -156,10 +201,7 @@ p {
   justify-content: center;
 }
 
-.btn-secondary:hover {
-  background: var(--glass-border);
-  color: var(--text-primary);
-}
+/* Old hover styles removed - see @media (hover: hover) block */
 
 .btn-secondary.active {
   background: var(--accent-primary);
